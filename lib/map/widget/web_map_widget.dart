@@ -5,17 +5,20 @@ import 'package:flutter/material.dart';
 import 'package:google_maps/google_maps.dart';
 
 import 'map_widget.dart';
+import 'new_pin_listener.dart';
 
-MapWidget getMapWidget() => WebMap();
+MapWidget getMapWidget({required NewPinListener listener}) => WebMap(listener: listener,);
 
 class WebMap extends StatefulWidget implements MapWidget {
-  WebMap({Key? key}) : super(key: key);
+  final NewPinListener listener;
+  WebMap({Key? key, required this.listener}) : super(key: key);
 
   @override
   State<WebMap> createState() => WebMapState();
 }
 
 class WebMapState extends State<WebMap> {
+
   @override
   Widget build(BuildContext context) {
     const String htmlId = "map";

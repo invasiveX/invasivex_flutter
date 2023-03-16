@@ -1,0 +1,1 @@
+typedef NewPinListener = void Function(double lat, double lon);

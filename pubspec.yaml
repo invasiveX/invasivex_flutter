@@ -31,6 +31,7 @@ environment:
 dependencies:
   google_maps_flutter: ^2.2.5
   google_maps_flutter_web: ^0.4.0+6
+  image_picker: ^0.8.7
   flutter:
     sdk: flutter
 

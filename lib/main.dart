@@ -1,6 +1,8 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:invasivex/map/widget/add_invasive_bottom_sheet.dart';
 
 import 'map/widget/map_widget.dart';
 
@@ -28,13 +30,15 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Invasive-X'),
+      home: MyHomePage(title: 'Invasive-X'),
     );
   }
 }
 
 class MyHomePage extends StatelessWidget {
-  const MyHomePage({super.key, required this.title});
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+
+  MyHomePage({super.key, required this.title});
 
   // This widget is the home page of your application. It is stateful, meaning
   // that it has a State object (defined below) that contains fields that affect
@@ -50,12 +54,18 @@ class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       appBar: AppBar(
         // Here we take the value from the MyHomePage object that was created by
         // the App.build method, and use it to set our appbar title.
         title: Text(title),
       ),
-      body: MapWidget(), // This trailing comma makes auto-formatting nicer for build methods.
+      body: MapWidget(listener: (lat, lon) {
+        debugPrintSynchronously("NEW PIN:$lat,$lon");
+        _scaffoldKey.currentState?.showBottomSheet((context) {
+          return AddInvasiveBottomSheet(lat: lat, lon: lon);
+        }, backgroundColor: Colors.white, enableDrag: false);
+      }), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
